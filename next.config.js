@@ -8,13 +8,7 @@ const nextConfig = {
     unoptimized: true,
   },
   basePath: '',
-  distDir: 'out',
-  async redirects() {
-    return []
-  },
-  async rewrites() {
-    return []
-  }
+  distDir: 'out'
 }
 
 module.exports = nextConfig
