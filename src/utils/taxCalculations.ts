@@ -182,10 +182,4 @@ export const calculateTakeHome = (
             additionalRate
         }
     };
-# Create new T3 app with your existing code
-npm create t3-app@latest
-
-# Add necessary packages
-npm install @trpc/client @trpc/server @prisma/client zodgit init
-git add .
-git commit -m "Initial commit"};
+}
