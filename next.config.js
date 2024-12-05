@@ -6,7 +6,6 @@ const nextConfig = {
     unoptimized: true
   },
   experimental: {
-    optimizeCss: true,
     forceSwcTransforms: true
   }
 }
