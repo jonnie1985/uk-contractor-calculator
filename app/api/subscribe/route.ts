@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { get, update } from '@vercel/edge-config';
+import { createClient } from '@vercel/edge-config';
 
 export async function POST(request: Request) {
   try {
@@ -11,9 +11,11 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    const config = createClient(process.env.EDGE_CONFIG_ID!);
     
     // Get existing subscribers
-    const subscribers = (await get('subscribers')) as string[] || [];
+    const subscribers = (await config.get('subscribers')) as string[] || [];
     
     // Check if email already exists
     if (subscribers.includes(email)) {
@@ -24,7 +26,10 @@ export async function POST(request: Request) {
     }
 
     // Add new subscriber
-    await update('subscribers', [...subscribers, email]);
+    const newSubscribers = [...subscribers, email];
+    await config.patch([
+      { operation: 'update', key: 'subscribers', value: newSubscribers }
+    ]);
 
     return NextResponse.json(
       { message: 'Successfully subscribed' },
