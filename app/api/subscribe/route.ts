@@ -1,21 +1,21 @@
-import { createClient } from '@vercel/edge-config';
 import { NextResponse } from 'next/server';
-
-const client = createClient(process.env.EDGE_CONFIG_ID!);
+import { createClient } from '@vercel/edge-config';
 
 export async function POST(request: Request) {
   try {
     const { email } = await request.json();
-    
-    if (!email) {
+
+    if (!email || typeof email !== 'string') {
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Invalid email' },
         { status: 400 }
       );
     }
 
-    // Get current subscribers
-    const subscribers = (await client.get('subscribers')) || [];
+    const client = createClient(process.env.EDGE_CONFIG_ID!);
+    
+    // Get existing subscribers
+    const subscribers = (await client.get('subscribers')) as string[] || [];
     
     // Check if email already exists
     if (subscribers.includes(email)) {
