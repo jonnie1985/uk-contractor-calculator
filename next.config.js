@@ -1,11 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
+  distDir: '.next',
   images: {
-    unoptimized: true
+    loader: 'default',
+    domains: [],
   },
-  trailingSlash: true
+  async redirects() {
+    return []
+  },
+  async rewrites() {
+    return []
+  }
 }
 
 module.exports = nextConfig
