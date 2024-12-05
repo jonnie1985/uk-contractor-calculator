@@ -28,12 +28,8 @@ export async function POST(request: Request) {
 
     // Add new subscriber
     const newSubscribers = [...subscribers, email];
-    await config.update([
-      {
-        operation: 'set',
-        key: 'subscribers',
-        value: newSubscribers
-      }
+    await config.setItems([
+      { key: 'subscribers', value: newSubscribers }
     ]);
 
     return NextResponse.json(
