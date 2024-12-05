@@ -28,7 +28,28 @@ export async function POST(request: Request) {
 
     // Add new subscriber
     const newSubscribers = [...subscribers, email];
-    await config.upsert('subscribers', newSubscribers);
+    
+    // Use Edge Config API directly
+    const response = await fetch(`https://edge-config.vercel.com/v1/items?edgeConfigId=${process.env.EDGE_CONFIG_ID}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${process.env.EDGE_CONFIG_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            operation: 'upsert',
+            key: 'subscribers',
+            value: newSubscribers
+          }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update subscribers');
+    }
 
     return NextResponse.json(
       { message: 'Successfully subscribed' },
