@@ -15,7 +15,8 @@ export async function POST(request: Request) {
     const config = createClient(process.env.EDGE_CONFIG_ID!);
     
     // Get existing subscribers
-    const subscribers = (await config.get('subscribers')) as string[] || [];
+    const hasSubscribers = await config.has('subscribers');
+    const subscribers = hasSubscribers ? ((await config.get('subscribers')) as string[]) : [];
     
     // Check if email already exists
     if (subscribers.includes(email)) {
@@ -26,9 +27,8 @@ export async function POST(request: Request) {
     }
 
     // Add new subscriber
-    await config.upsert([
-      { key: 'subscribers', value: [...subscribers, email] }
-    ]);
+    const newSubscribers = [...subscribers, email];
+    await config.write('subscribers', newSubscribers);
 
     return NextResponse.json(
       { message: 'Successfully subscribed' },
