@@ -28,7 +28,13 @@ export async function POST(request: Request) {
 
     // Add new subscriber
     const newSubscribers = [...subscribers, email];
-    await config.set('subscribers', newSubscribers);
+    await config.update([
+      {
+        operation: 'set',
+        key: 'subscribers',
+        value: newSubscribers
+      }
+    ]);
 
     return NextResponse.json(
       { message: 'Successfully subscribed' },
