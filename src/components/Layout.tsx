@@ -3,6 +3,7 @@
 import React from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import NewsletterSignup from './NewsletterSignup';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -51,7 +52,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div
           className={`fixed inset-0 lg:relative lg:translate-x-0 transform ${
             isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } transition-transform duration-300 ease-in-out lg:block z-40`}
+          } transition-transform duration-300 ease-in-out lg:block z-40 w-64`}
         >
           <div className="lg:sticky lg:top-0">
             <Sidebar onClose={() => setIsSidebarOpen(false)} />
@@ -67,8 +68,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
 
         {/* Main content */}
-        <main className="flex-1 p-4 lg:p-8">
-          {children}
+        <main className="flex-1 w-full">
+          <div className="lg:max-w-[1024px] lg:mx-auto">
+            <div className="py-2">
+              {children}
+            </div>
+            <div className="px-4 sm:px-6 lg:px-8 pb-8">
+              <NewsletterSignup />
+            </div>
+          </div>
         </main>
       </div>
     </div>

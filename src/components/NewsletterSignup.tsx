@@ -12,7 +12,7 @@ export default function NewsletterSignup() {
     setStatus('loading');
 
     try {
-      const response = await fetch('/api/newsletter/subscribe', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -20,7 +20,10 @@ export default function NewsletterSignup() {
         body: JSON.stringify({ email }),
       });
 
-      if (!response.ok) throw new Error('Subscription failed');
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Subscription failed');
+      }
 
       setStatus('success');
       setMessage('Thanks for subscribing! Please check your email to confirm.');
