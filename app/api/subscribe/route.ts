@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient, set } from '@vercel/edge-config';
+import { createClient } from '@vercel/edge-config';
 
 export async function POST(request: Request) {
   try {
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 
     // Add new subscriber
     const newSubscribers = [...subscribers, email];
-    await set('subscribers', newSubscribers);
+    await config.item('subscribers').set(newSubscribers);
 
     return NextResponse.json(
       { message: 'Successfully subscribed' },
