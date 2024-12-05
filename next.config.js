@@ -1,11 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   reactStrictMode: true,
-  distDir: '.next',
   images: {
     loader: 'default',
     domains: [],
+    unoptimized: true,
   },
+  basePath: '',
+  distDir: 'out',
   async redirects() {
     return []
   },
