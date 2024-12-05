@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import HourlyCalculator from './HourlyCalculator';
 import GrossSalaryCalculator from './GrossSalaryCalculator';
 import SalarySummary from './SalarySummary';
+import { Period } from './types';
 
 const SalaryCalculator: React.FC = () => {
     const [hourlySalary, setHourlySalary] = useState<number>(0);
