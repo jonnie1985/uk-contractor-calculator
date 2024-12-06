@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    serverActions: true
+    serverActions: true,
+    allowMiddlewareResponseBody: true
   }
 }
 
