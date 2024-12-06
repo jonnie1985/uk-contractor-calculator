@@ -17,6 +17,11 @@ const navItems = [
 const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   const pathname = usePathname();
 
+  const handleSubscribe = () => {
+    window.open('https://docs.google.com/forms/d/1VIiE4BEpdVcQabeYPPqfjBxL2Db9MzeCaE5j5zqMSnY/viewform', '_blank');
+    if (onClose) onClose();
+  };
+
   return (
     <nav className="w-64 bg-white shadow-lg h-screen overflow-y-auto">
       {/* Close button for mobile */}
@@ -50,8 +55,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 onClick={onClose}
                 className={`block px-4 py-2 rounded-lg transition-colors ${
                   pathname === item.path
-                    ? 'bg-blue-500 text-white'
-                    : 'text-gray-600 hover:bg-blue-50'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
                 {item.title}
@@ -60,19 +65,26 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
           ))}
         </ul>
 
-        {/* Newsletter Signup Teaser */}
-        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-          <h3 className="text-sm font-semibold text-blue-800 mb-2">
-            Stay Updated
-          </h3>
-          <p className="text-sm text-blue-600 mb-3">
-            Subscribe to our newsletter for the latest updates and resources.
-          </p>
+        {/* Newsletter subscription button */}
+        <div className="mt-6 px-4">
           <button
-            onClick={() => {/* TODO: Implement newsletter signup */}}
-            className="w-full px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors"
+            onClick={handleSubscribe}
+            className="w-full px-6 py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2"
           >
-            Subscribe
+            <span>Subscribe Now</span>
+            <svg 
+              className="w-5 h-5" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M14 5l7 7m0 0l-7 7m7-7H3" 
+              />
+            </svg>
           </button>
         </div>
       </div>
